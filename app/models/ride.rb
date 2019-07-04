@@ -1,6 +1,8 @@
 require 'securerandom'
 
 class Ride < ApplicationRecord
+  validates :from, presence: true
+  validates :to, presence: true
   after_initialize :init
 
   STATE_CREATED = 'created'
