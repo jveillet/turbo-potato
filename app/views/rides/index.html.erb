@@ -1,0 +1,41 @@
+<h1> Turbo Potato!</h1>
+
+<section class="ride-new">
+  <div class="ride-new-title">Want a ride?</div>
+  <div><button class="ride-new-create">Create new</button></div>
+</section>
+
+<section class="rides">
+  <div class="rides-title"></div>
+  <table class="rides-list">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Departure</th>
+        <th>Destination</th>
+        <th>state</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Code</th>
+        <th>Departure</th>
+        <th>Destination</th>
+        <th>state</th>
+        <th>Actions</th>
+      </tr>
+    </tfoot>
+    <tbody>
+    <% @rides.each do |ride| %>
+      <tr>
+        <td><%= link_to ride.code, ride_path(ride)  %></td>
+        <td><%= ride.from %></td>
+        <td><%= ride.to %></td>
+        <td><%= ride.state %></td>
+        <td>&nbsp;</td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</section>

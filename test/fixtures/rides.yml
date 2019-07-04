@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  from: MyString
+  to: MyString
+  state: MyString
+
+two:
+  code: MyString
+  from: MyString
+  to: MyString
+  state: MyString
