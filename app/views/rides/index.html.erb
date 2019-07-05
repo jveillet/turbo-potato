@@ -33,9 +33,14 @@
         <td><%= ride.from %></td>
         <td><%= ride.to %></td>
         <td><%= ride.state %></td>
+        <td>
         <% if ride.created? %>
-        <td><%= link_to 'Start', ride_start_ride_path(ride, id: ride.id), method: :put %></td>
+          <%= link_to 'Start', ride_start_ride_path(ride, id: ride.id), method: :put %>
         <% end %>
+        <% if ride.created? || ride.started? %>
+          <%= link_to 'Cancel', ride_cancel_ride_path(ride, id: ride.id), method: :put %>
+        <% end %>
+        </td>
       </tr>
     <% end %>
     </tbody>

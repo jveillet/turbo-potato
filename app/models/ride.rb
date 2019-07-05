@@ -45,4 +45,8 @@ class Ride < ApplicationRecord
   def start
     self.state = STATE_STARTED
   end
+
+  def cancel
+    self.state = STATE_CANCELED
+  end
 end
