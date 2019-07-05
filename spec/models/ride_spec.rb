@@ -17,6 +17,11 @@ RSpec.describe Ride, type: :model do
     expect(factory.code).not_to be_nil
   end
 
+  it 'has a 4 characters code' do
+    factory = FactoryBot.build(:ride, from: 'a', to: 'b')
+    expect(factory.code.size).to eq(4)
+  end
+
   it "is invalid without a departure" do
     factory = FactoryBot.build(:ride, from: nil)
     expect(factory).not_to be_valid
