@@ -2,7 +2,9 @@
 
 <section class="ride-new">
   <div class="ride-new-title">Want a ride?</div>
-  <div><button class="ride-new-create">Create new</button></div>
+  <div>
+    <%= button_to 'Create', new_ride_path, method: 'get', class: 'ride-new-create' %>
+  </div>
 </section>
 
 <section class="rides">

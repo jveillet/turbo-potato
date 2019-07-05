@@ -16,6 +16,25 @@ class RidesController < ApplicationController
   end
 
   ##
+  # Instanciate a new empty Ride
+  #
+  def new
+    @ride = Ride.new
+  end
+
+  ##
+  # Creates a new Ride record
+  # @param from [String] Departure of the ride
+  # @param to [String] Destination of the ride
+  #
+  def create
+    @ride = Ride.create(ride_params)
+    log_state(@ride.code, 'new', @ride.state)
+
+    redirect_to rides_path
+  end
+
+  ##
   # Changes the state of the ride to "Started"
   # @param id [String] A ride unique Id
   #
@@ -61,5 +80,10 @@ class RidesController < ApplicationController
       log_error("Error while deleting ride", @ride.code)
     end
     redirect_to rides_path
+  end
+
+  private
+  def ride_params
+    params.require(:ride).permit(:from, :to)
   end
 end
