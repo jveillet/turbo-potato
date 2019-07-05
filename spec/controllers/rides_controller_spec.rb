@@ -57,4 +57,26 @@ RSpec.describe RidesController, type: :controller do
       expect(ride.state).not_to eq('started')
     end
   end
+
+  describe 'PUT #cancel_ride' do
+    it "redirects to the rides list" do
+      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', state: 'created')
+      put(:cancel_ride, params: { id: ride.id, ride_id: ride.id })
+      expect(response).to redirect_to(:rides)
+    end
+
+    it 'changes the state to cancelled' do
+      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', state: 'created')
+      put(:cancel_ride, params: { id: ride.id, ride_id: ride.id })
+      ride.reload
+      expect(ride.cancelled?).to be_truthy
+    end
+
+    it "doesn't change the state if it's different from created or started" do
+      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', state: 'foo')
+      put(:cancel_ride, params: { id: ride.id, ride_id: ride.id })
+      ride.reload
+      expect(ride.state).to eq('foo')
+    end
+  end
 end
