@@ -9,7 +9,7 @@ RSpec.describe Ride, type: :model do
 
   it 'has a state created' do
     factory = FactoryBot.build(:ride, from: 'a', to: 'b')
-    expect(factory.state).to eql('created')
+    expect(factory.created?).to be_truthy
   end
 
   it 'has a valid code' do
@@ -25,5 +25,13 @@ RSpec.describe Ride, type: :model do
   it "is invalid without a destination" do
     factory = FactoryBot.build(:ride, to: nil)
     expect(factory).not_to be_valid
+  end
+
+  it "has a state started" do
+    factory = FactoryBot.build(:ride, state: 'created')
+    factory.start
+    factory.update(state: factory.state)
+    factory.reload
+    expect(factory.started?).to be_truthy
   end
 end
