@@ -1,0 +1,15 @@
+<section>
+  <header>
+    <h2>Want a ride?</h2>
+  </header>
+  <main>
+    <div class="ride-form">
+      <%= form_for @ride, :html => {:class => "ride-form-new"} do |f| %>
+        <p>Departure: <%= f.text_field :from, name: 'from' %></p>
+        <p>Destination: <%= f.text_field :to, name: 'to' %></p>
+
+        <%= f.submit 'Save' %>
+        <%= link_to "Cancel", :back, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+  </main>
+</section>

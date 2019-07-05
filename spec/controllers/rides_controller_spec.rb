@@ -77,6 +77,25 @@ RSpec.describe RidesController, type: :controller do
     end
   end
 
+  describe 'POST #create' do
+    context 'with valid attributes' do
+      let(:valid_attribute) do
+        attributes_for(:ride, from: 'a', to: 'b')
+      end
+
+      it 'saves the new ride in the database' do
+        expect do
+          post :create, params: { ride: valid_attribute }
+        end.to change(Ride, :count).by(1)
+      end
+
+      it 'redirects to the rides list' do
+        post :create, params: { ride: valid_attribute }
+        expect(response).to redirect_to(:rides)
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     it "deletes the ride" do
       expect{
