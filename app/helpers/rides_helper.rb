@@ -6,4 +6,8 @@ module RidesHelper
   def log_error(message, code)
     logger.info "#{message} with n°#{code}"
   end
+
+  def ride_pending?(ride)
+    ride.created? || ride.started?
+  end
 end

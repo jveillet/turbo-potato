@@ -39,7 +39,7 @@
         <% if ride.created? %>
           <%= link_to 'Start', ride_start_ride_path(ride, id: ride.id), method: :put %>
         <% end %>
-        <% if ride.created? || ride.started? %>
+        <% if ride_pending?(ride) %>
           <%= link_to 'Cancel', ride_cancel_ride_path(ride, id: ride.id), method: :put %>
         <% end %>
         <%= link_to 'Remove', ride_path(ride, id: ride.id), method: 'delete', data: { confirm: 'Are you sure?' } %>
