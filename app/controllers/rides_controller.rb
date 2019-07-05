@@ -1,5 +1,8 @@
+require 'payment/ride_payment'
+
 class RidesController < ApplicationController
   include RidesHelper
+  include RidePayment
   ##
   # Displays all the existing rides
   #
@@ -28,8 +31,11 @@ class RidesController < ApplicationController
   # @param to [String] Destination of the ride
   #
   def create
-    @ride = Ride.create(ride_params)
-    log_state(@ride.code, 'new', @ride.state)
+    @ride = Ride.new(from: params[:from], to: params[:to])
+    if @ride.save
+      log_state(@ride.code, 'new', @ride.state)
+      bill(@ride)
+    end
 
     redirect_to rides_path
   end
@@ -43,8 +49,10 @@ class RidesController < ApplicationController
     previous_state = @ride.state
     if @ride.created?
       @ride.start
-      @ride.update(state: @ride.state)
-      log_state(@ride.code, previous_state, @ride.state)
+      if @ride.update(state: @ride.state)
+        log_state(@ride.code, previous_state, @ride.state)
+        pay(@ride)
+      end
     end
 
     redirect_to rides_path
@@ -59,8 +67,10 @@ class RidesController < ApplicationController
     previous_state = @ride.state
     if @ride.started? || @ride.created?
       @ride.cancel
-      @ride.update(state: @ride.state)
-      log_state(@ride.code, previous_state, @ride.state)
+      if @ride.update(state: @ride.state)
+        log_state(@ride.code, previous_state, @ride.state)
+        reimburse(@ride)
+      end
     end
 
     redirect_to rides_path
@@ -80,10 +90,5 @@ class RidesController < ApplicationController
       log_error("Error while deleting ride", @ride.code)
     end
     redirect_to rides_path
-  end
-
-  private
-  def ride_params
-    params.require(:ride).permit(:from, :to)
   end
 end
