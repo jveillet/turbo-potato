@@ -25,7 +25,7 @@ class RidesController < ApplicationController
     if @ride.created?
       @ride.start
       @ride.update(state: @ride.state)
-      log_state(previous_state, @ride)
+      log_state(@ride.code, previous_state, @ride.state)
     end
 
     redirect_to rides_path
@@ -41,9 +41,25 @@ class RidesController < ApplicationController
     if @ride.started? || @ride.created?
       @ride.cancel
       @ride.update(state: @ride.state)
-      log_state(previous_state, @ride)
+      log_state(@ride.code, previous_state, @ride.state)
     end
 
+    redirect_to rides_path
+  end
+
+  ##
+  # Deletes a ride
+  # @param id [String] A ride unique Id
+  #
+  def destroy
+    @ride = Ride.find(params[:id])
+    previous_state = @ride.state
+    @ride.destroy
+    if @ride.destroyed?
+      log_state(@ride.code, previous_state, 'destoyed')
+    else
+      log_error("Error while deleting ride", @ride.code)
+    end
     redirect_to rides_path
   end
 end

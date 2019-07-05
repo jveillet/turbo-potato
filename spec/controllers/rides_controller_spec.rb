@@ -4,11 +4,14 @@ require 'rails_helper'
 
 RSpec.describe RidesController, type: :controller do
 
+  before :each do
+    @ride = FactoryBot.create(:ride, from: 'a', to: 'b')
+  end
+
   describe 'GET #index' do
     it 'populates an array of rides' do
-      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', created_at: '2019-01-01', updated_at: '2019-01-01')
       get :index
-      expect(assigns(:rides)).to eq([ride])
+      expect(assigns(:rides)).to eq([@ride])
     end
 
     it 'responds successfully' do
@@ -24,59 +27,61 @@ RSpec.describe RidesController, type: :controller do
 
   describe 'GET #show' do
     it "assigns the requested ride to @ride" do
-      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', created_at: '2019-01-01', updated_at: '2019-01-01')
-      get :show, params: {  id: ride.id }
-      expect(assigns(:ride)).to eq(ride)
+      get :show, params: {  id: @ride.id }
+      expect(assigns(:ride)).to eq(@ride)
     end
 
     it 'renders the #show view' do
-      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', created_at: '2019-01-01', updated_at: '2019-01-01')
-      get :show, params: { id: ride.id }
+      get :show, params: { id: @ride.id }
       expect(response).to render_template(:show)
     end
   end
 
   describe 'PUT #start_ride' do
     it "redirects to the rides list" do
-      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', state: 'created')
-      put(:start_ride, params: { id: ride.id, ride_id: ride.id })
+      put(:start_ride, params: { id: @ride.id, ride_id: @ride.id })
       expect(response).to redirect_to(:rides)
     end
 
     it 'changes the state to started' do
-      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', state: 'created')
-      put(:start_ride, params: { id: ride.id, ride_id: ride.id })
-      ride.reload
-      expect(ride.state).to eq('started')
+      put(:start_ride, params: { id: @ride.id, ride_id: @ride.id })
+      @ride.reload
+      expect(@ride.started?).to be_truthy
     end
 
     it "doesn't change the state if it's different from created" do
-      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', state: 'cancelled')
+      ride = FactoryBot.create(:ride, from: 'a', to: 'b', state: 'foo')
       put(:start_ride, params: { id: ride.id, ride_id: ride.id })
       ride.reload
-      expect(ride.state).not_to eq('started')
+      expect(ride.state).to eq('foo')
     end
   end
 
   describe 'PUT #cancel_ride' do
     it "redirects to the rides list" do
-      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', state: 'created')
-      put(:cancel_ride, params: { id: ride.id, ride_id: ride.id })
+      put(:cancel_ride, params: { id: @ride.id, ride_id: @ride.id })
       expect(response).to redirect_to(:rides)
     end
 
     it 'changes the state to cancelled' do
-      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', state: 'created')
-      put(:cancel_ride, params: { id: ride.id, ride_id: ride.id })
-      ride.reload
-      expect(ride.cancelled?).to be_truthy
+      put(:cancel_ride, params: { id: @ride.id, ride_id: @ride.id })
+      @ride.reload
+      expect(@ride.cancelled?).to be_truthy
     end
 
     it "doesn't change the state if it's different from created or started" do
-      ride = FactoryBot.create(:ride, id: '1', from: 'a', to: 'b', state: 'foo')
+      ride = FactoryBot.create(:ride, from: 'a', to: 'b', state: 'foo')
       put(:cancel_ride, params: { id: ride.id, ride_id: ride.id })
       ride.reload
       expect(ride.state).to eq('foo')
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    it "deletes the ride" do
+      expect{
+        delete :destroy, params: { id: @ride.id, ride_id: @ride.id }
+     }.to change(Ride, :count).by(-1)
     end
   end
 end
