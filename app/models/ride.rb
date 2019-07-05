@@ -29,4 +29,20 @@ class Ride < ApplicationRecord
   def generate_code
     SecureRandom.alphanumeric(4)
   end
+
+  def started?
+    self.state == STATE_STARTED
+  end
+
+  def created?
+    self.state == STATE_CREATED
+  end
+
+  def cancelled?
+    self.state == STATE_CANCELED
+  end
+
+  def start
+    self.state = STATE_STARTED
+  end
 end
