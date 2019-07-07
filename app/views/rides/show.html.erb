@@ -1,10 +1,19 @@
-<section class="ride-details">
+<section class="ride-edit">
   <header>
-    <h2 class="ride-details-title">Ride n° <%= @ride.code %></h2>
+    <h2 class="ride-edit-title">🚗 Ride n° <%= @ride.code %></h2>
   </header>
   <main>
-    <div class="ride-details-from">Departure: <%= @ride.from %></div>
-    <div class="ride-details-to">Destination: <%= @ride.to %></div>
-    <div class="ride-details-state">State: <%= @ride.state %></div>
+    <div class="ride-edit-location">From <strong><%= @ride.from %></strong> to <strong><%= @ride.to %></strong>.</div>
+    <div class="ride-edit-state">This ride is <%= @ride.state %>.</div>
+    <div class="ride-edit-actions">
+      <% if @ride.created? %>
+          <%= link_to 'Start', ride_start_ride_path(@ride, id: @ride.id), method: :put, class: 'ride-new-action' %>
+        <% end %>
+        <% if ride_pending?(@ride) %>
+          <%= link_to 'Cancel', ride_cancel_ride_path(@ride, id: @ride.id), method: :put, class: 'ride-new-action' %>
+        <% end %>
+        <%= link_to 'Remove', ride_path(@ride, id: @ride.id), method: 'delete', data: { confirm: 'Do you want to delete the ride?' }, class: 'ride-new-delete' %>
+        <%= link_to 'Cancel', :back, class: 'cancel' %>
+    </div>
   </main>
 <section>

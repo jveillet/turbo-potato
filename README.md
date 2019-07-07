@@ -2,6 +2,8 @@
 
 This is a sample rails 5 app to manage rides.
 
+![image](https://user-images.githubusercontent.com/5037407/60766914-658df080-a0b0-11e9-9480-cb7b7409d82a.png)
+
 ## Getting started
 
 This project is using Ruby on Rails 5, PostgresSQL and RabbitMQ.
