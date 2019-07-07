@@ -35,6 +35,7 @@ class RidesController < ApplicationController
     if @ride.save
       log_state(@ride.code, 'new', @ride.state)
       bill(@ride)
+      RabbitPublisherService.publish(@ride.attributes)
     end
 
     redirect_to rides_path
@@ -52,6 +53,7 @@ class RidesController < ApplicationController
       if @ride.update(state: @ride.state)
         log_state(@ride.code, previous_state, @ride.state)
         pay(@ride)
+        RabbitPublisherService.publish(@ride.attributes)
       end
     end
 
@@ -70,6 +72,7 @@ class RidesController < ApplicationController
       if @ride.update(state: @ride.state)
         log_state(@ride.code, previous_state, @ride.state)
         reimburse(@ride)
+        RabbitPublisherService.publish(@ride.attributes)
       end
     end
 
