@@ -33,6 +33,8 @@ Then run the full project
 $ docker-compose up
 ```
 
+The app is then available at the URL `http://localhost:3000`.
+
 ### Database initialization
 
 ```
@@ -62,6 +64,8 @@ $ cd turbo-potato/
 $ touch .env
 $ echo "RABBITMQ_URL='amqp://172.17.0.1:5672'" >> .env
 ```
+
+The RabbitMQ admin interface is avaialable at `http://localhost:15672`.
 
 ## Testing
 Launch the entire test suite (with RSpec):
