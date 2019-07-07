@@ -26,6 +26,8 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+# Use RabbitMQ
+gem 'bunny', '~> 2.14', '>= 2.14.2'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -42,6 +44,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
+  # Autoload dotenv in Rails
+  gem 'dotenv-rails', '~> 2.7', '>= 2.7.4'
 end
 
 group :development do
