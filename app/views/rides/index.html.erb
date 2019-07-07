@@ -1,9 +1,11 @@
 <h1> Turbo Potato!</h1>
 
 <section class="ride-new">
-  <div class="ride-new-title">Want a ride?</div>
-  <div>
-    <%= button_to 'Create', new_ride_path, method: 'get', class: 'ride-new-create' %>
+  <div class="ride-new-container">
+    <div class="ride-new-title">Want a ride?</div>
+    <div>
+      <%= button_to 'Create', new_ride_path, method: 'get', class: 'btn btn--small ride-new-create' %>
+    </div>
   </div>
 </section>
 
@@ -19,30 +21,21 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tfoot>
-      <tr>
-        <th>Code</th>
-        <th>Departure</th>
-        <th>Destination</th>
-        <th>state</th>
-        <th>Actions</th>
-      </tr>
-    </tfoot>
     <tbody>
     <% @rides.each do |ride| %>
       <tr>
-        <td><%= link_to ride.code, ride_path(ride)  %></td>
+        <td><%= link_to ride.code, ride_path(ride), class: 'ride-new-action'  %></td>
         <td><%= ride.from %></td>
         <td><%= ride.to %></td>
         <td><%= ride.state %></td>
         <td>
         <% if ride.created? %>
-          <%= link_to 'Start', ride_start_ride_path(ride, id: ride.id), method: :put %>
+          <%= link_to 'Start', ride_start_ride_path(ride, id: ride.id), method: :put, class: 'ride-new-action' %>
         <% end %>
         <% if ride_pending?(ride) %>
-          <%= link_to 'Cancel', ride_cancel_ride_path(ride, id: ride.id), method: :put %>
+          <%= link_to 'Cancel', ride_cancel_ride_path(ride, id: ride.id), method: :put, class: 'ride-new-action' %>
         <% end %>
-        <%= link_to 'Remove', ride_path(ride, id: ride.id), method: 'delete', data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Remove', ride_path(ride, id: ride.id), method: 'delete', data: { confirm: 'Do you want to delete the ride?' }, class: 'ride-new-delete' %>
         </td>
       </tr>
     <% end %>

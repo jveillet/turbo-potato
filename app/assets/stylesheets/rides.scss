@@ -1,3 +1,118 @@
 // Place all the styles related to the Rides controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.ride-new-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+      flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  margin: 1em;
+}
+
+.ride-new-title {
+  font-weight: bold;
+  padding-right: 1em;
+}
+
+.rides-list {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+  padding: .5em;
+  text-align: left;
+}
+
+.rides-list td, .rides-list th {
+  border: 1px solid lightgray;
+  padding: .5em;
+  text-align: left;
+}
+
+.rides-list tr thead {
+  font-weight: bold;
+}
+
+.ride-new-action:link,
+.ride-new-action:hover,
+.ride-new-action:visited {
+  color: #1e3799;
+}
+
+.ride-new-delete:link,
+.ride-new-delete:hover,
+.ride-new-delete:visited {
+  color: #eb2f06;
+}
+
+/* Create ride */
+
+.cancel:link,
+.cancel:hover,
+.cancel:visited {
+  color: #60a3bc;
+}
+
+/* Edit ride */
+
+.ride-edit-actions {
+  margin-top: 1em;
+}
+
+/* Buttons */
+
+.btn {
+  appearance: none;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-family: inherit;
+  font-size: 100%;
+  cursor: pointer;
+  border: none;
+  margin: 0;
+  line-height: 3;
+  height: 3em;
+  padding: 0 1em;
+  border-radius: .25em;
+  overflow: visible;
+  font-weight: 600;
+  text-decoration: none;
+  background-color: #4a69bd;
+  color: #ffffff;
+}
+
+.btn::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.btn:hover,
+.btn:active,
+.btn:focus,
+.btn:visited {
+  text-decoration: none;
+}
+
+.btn:active,
+.btn:focus {
+  outline: none;
+}
+
+.btn--small {
+  padding-right: .8em;
+  padding-left: .8em;
+  line-height: 2;
+  height: 2em;
+  font-size: .8em;
+}
